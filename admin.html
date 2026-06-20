@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Portal - An Noor Restaurant</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #f9f9f9;
+      color: #333;
+      font-family: 'Inter', sans-serif;
+    }
+    .admin-container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .admin-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+    .admin-header h1 {
+      color: #d4a017;
+      font-family: 'Playfair Display', serif;
+    }
+    #login-section {
+      text-align: center;
+      padding: 40px 0;
+    }
+    .login-box {
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    .login-box input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+    #admin-dashboard {
+      display: none;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-family: 'Inter', sans-serif;
+    }
+    .menu-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      border: 1px solid #eee;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    .menu-item-info strong {
+      display: block;
+      color: #b00;
+    }
+    .btn-delete {
+      background: #c9184a;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .btn-delete:hover {
+      background: #a01038;
+    }
+    .btn-submit {
+      background: #d4a017;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      font-size: 16px;
+    }
+    .btn-submit:hover {
+      background: #b88a10;
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      background: #f0f0f0;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    .tab-btn.active {
+      background: #d4a017;
+      color: #fff;
+      border-color: #d4a017;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .back-home {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #d4a017;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-container">
+    <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Back to Website</a>
+    
+    <div class="admin-header">
+      <h1><i class="fas fa-user-shield"></i> Admin Portal</h1>
+      <p>Manage Menu Items</p>
+    </div>
+
+    <!-- LOGIN SECTION -->
+    <div id="login-section">
+      <div class="login-box">
+        <h3>Enter Password</h3>
+        <input type="password" id="admin-password" placeholder="Password" />
+        <button class="btn-submit" id="btn-login">Login</button>
+        <p id="login-error" style="color: red; display: none; margin-top: 10px;">Incorrect Password</p>
+      </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD -->
+    <div id="admin-dashboard">
+      <div class="tabs">
+        <button class="tab-btn active" data-target="add-item-tab">Add New Dish</button>
+        <button class="tab-btn" data-target="manage-items-tab">Manage Dishes</button>
+      </div>
+
+      <!-- Add Item Tab -->
+      <div id="add-item-tab" class="tab-content active">
+        <h3>Add a New Dish</h3>
+        <form id="add-item-form">
+          <div class="form-group">
+            <label>Dish Name</label>
+            <input type="text" id="item-name" required placeholder="e.g. Special Chicken Biryani" />
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="item-category" required>
+              <option value="mandi">Mandi Rice</option>
+              <option value="biryani">Biryani</option>
+              <option value="koththu">Koththu</option>
+              <option value="sawan">Sawan / Majlis</option>
+              <option value="beverages">Beverages</option>
+              <option value="combo">Family Combos</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Price</label>
+            <input type="text" id="item-price" required placeholder="e.g. Rs 1,500 / plate" />
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="item-desc" rows="3" required placeholder="Describe the dish..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Image URL (e.g. images/biryani_dish.png)</label>
+            <input type="text" id="item-image" required value="images/mandi_rice_hero.png" />
+          </div>
+          <div class="form-group">
+            <label>Badge (Optional, e.g. "Popular", "New")</label>
+            <input type="text" id="item-badge" placeholder="Leave empty if none" />
+          </div>
+          <button type="submit" class="btn-submit">Add Dish to Menu</button>
+        </form>
+      </div>
+
+      <!-- Manage Items Tab -->
+      <div id="manage-items-tab" class="tab-content">
+        <h3>Manage Existing Dishes</h3>
+        <p>Changes are saved automatically.</p>
+        <div id="admin-menu-list">
+          <!-- Dynamic list generated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="menu-data.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
